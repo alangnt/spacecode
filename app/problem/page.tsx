@@ -45,23 +45,26 @@ function Problem({ solved, setSolved }: { solved: boolean, setSolved: React.Disp
 // represented by the '*' character. The function should return the total number
 // of stars in the sky.
 
+// Example usage:
+// const sky = [
+//     "****",
+//     "*..*",
+//     "*..*",
+//     "****"
+// ];
+// return countStars(sky); // Output: 12
+
 function countStars(sky) {
     // Your code here
-}
+}`
 
-const sky = [
-    ".*..*",
-    "...*.",
-    "**.*."
-];
-
-return countStars(sky);
-`
     );
     const [output, setOutput] = useState<string>("");
     const [notSolved, setNotSolved] = useState<boolean>(false);
     const [loadingRun, setLoadingRun] = useState<boolean>(false);
     const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+    const [testResults, setTestResults] = useState<string[]>([]);
+    const [failedTestIndex, setFailedTestIndex] = useState<number | null>(null);
 
     const handleEditorChange: OnChange = (value) => {
         setCode(value || "");
@@ -82,33 +85,62 @@ return countStars(sky);
         }, 1000);
     };
 
+    const testCases = [
+        {
+            input: 'const sky = [".*..*", "...*.", "**.*."]; return countStars(sky);',
+            output: "6"
+        },
+        {
+            input: 'const sky = ["****", "*..*", "*..*", "****"]; return countStars(sky);',
+            output: "12"
+        },
+        {
+            input: 'const sky = [".....*", "..*..*", "*.....*"]; return countStars(sky);',
+            output: "5"
+        },
+        {
+            input: 'const sky = ["*.***", "***.*", "*.*.*", "*.*.*"]; return countStars(sky);',
+            output: "14"
+        }
+    ];
+
     const solution = "6";
 
     const handleSubmit = () => {
-        // Animate a loading state
         setLoadingSubmit(true);
+        setNotSolved(false);
+        setTestResults([]);
+        setFailedTestIndex(null);
 
-        try {
-            // Simulate a delay
-            setTimeout(() => {
-                const result = new Function(code)();
-                const output = String(result);
-            
-                if (output === solution) {
-                    setSolved(true);
-                    setNotSolved(false);
-                } else {
-                    setNotSolved(true);
+        setTimeout(() => {
+            try {
+                let allTestsPassed = true;
+                const newTestResults: string[] = [];
+
+                for (let i = 0; i < testCases.length; i++) {
+                    const testCase = testCases[i];
+                    const result = new Function(code + testCase.input)();
+                    const output = String(result);
+                    newTestResults.push(output);
+
+                    if (output !== testCase.output) {
+                        allTestsPassed = false;
+                        setFailedTestIndex(i);
+                        break;
+                    }
                 }
-            
-                setOutput(output);
+
+                setSolved(allTestsPassed);
+                setNotSolved(!allTestsPassed);
+                setTestResults(newTestResults);
+                setOutput(newTestResults[0]); // Set output to the result of the first test case
+            } catch (error) {
+                setOutput(`Error: ${(error as Error).message}`);
+                setNotSolved(true);
+            } finally {
                 setLoadingSubmit(false);
-            }, 1000);
-        } catch (error) {
-            setOutput(`Error: ${(error as Error).message}`);
-            setNotSolved(true);
-            setLoadingSubmit(false);
-        }
+            }
+        }, 1000);
     };
 
     const handleRestart = () => {
@@ -138,16 +170,26 @@ return countStars(sky);
                     <div className="px-4 bg-gray-800/50 w-full min-h-full text-gray-300">
                         <pre>{output}</pre>
 
-                        {notSolved && (
+                        {notSolved && failedTestIndex !== null && (
                             <>
                                 <pre className="text-red-500">Your solution is wrong. Try again.</pre>
-                                <pre className="text-red-500">Expected output: {solution}</pre>
-                                <pre className="text-red-500">Your output: {output}</pre>
+                                <pre className="text-red-500">Test Case {failedTestIndex + 1} failed:</pre>
+                                <pre className="text-red-500">Input: {testCases[failedTestIndex].input}</pre>
+                                <pre className="text-red-500">Expected output: {testCases[failedTestIndex].output}</pre>
+                                <pre className="text-red-500">Your output: {testResults[failedTestIndex]}</pre>
                             </>
                         )}
 
                         {solved && (
-                            <pre className="text-green-500">Congratulations! You solved the problem.</pre>
+                            <>
+                                {testCases.map((testCase, index) => (
+                                    <pre key={index} className="text-green-500 flex items-center gap-2">
+                                        <Check className="w-4 h-4" />
+                                        Test Case {index + 1}: {testResults[index]} for an expected of {testCase.output}
+                                    </pre>
+                                ))}
+                                <pre className="text-green-500">Congratulations! You solved the problem.</pre>
+                            </>
                         )}
                     </div>
 
