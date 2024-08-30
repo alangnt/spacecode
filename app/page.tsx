@@ -26,7 +26,7 @@ function Wallpaper() {
 function Header() {
   return (
     <header className="flex justify-center items-center text-center py-4">
-      <h1 className="text-3xl font-bold">SpaceCode - Redefining the Future of Code in the Space Industry</h1>
+      <h1 className="sm:text-3xl text-2xl max-sm:p-2">SpaceCode - Redefining the Future of Code in the Space Industry</h1>
     </header>
   );
 }
@@ -41,7 +41,7 @@ function Main() {
   return (
     <main className="flex flex-col items-center justify-center max-w-3xl mx-auto h-[50vh]">
       <div className="flex flex-col items-center">
-        <button className="text-2xl hover:text-gray-400 hover:scale-105 transition-all duration-300" onClick={handleProblemClick}>Solve problem of the day</button>
+        <button className="text-2xl hover:text-gray-400 sm:hover:scale-105 sm:transition-all sm:duration-300" onClick={handleProblemClick}>Solve problem of the day</button>
       </div>
     </main>
   );

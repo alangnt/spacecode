@@ -26,10 +26,10 @@ function Header({ solved }: { solved: boolean }) {
     };
 
     return (
-        <header className="flex items-center justify-between p-2 bg-gray-800 border-b border-gray-700">
+        <header className="flex items-center justify-between p-2 bg-gray-800 border-b border-gray-700 text-center">
             <ChevronLeft className="p-2 w-8 h-8 rounded-full hover:bg-gray-700 cursor-pointer" onClick={handleBack} />
-            <div className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-                <h1 className="text-lg">Problem (08/30): Counting Stars</h1>
+            <div className="flex items-center gap-2 sm:absolute sm:left-1/2 sm:-translate-x-1/2">
+                <h1 className="text-lg max-sm:text-sm">Problem (08/30): Counting Stars</h1>
                 {solved && <Check className="w-4 h-4 text-green-500" />}
             </div>
         </header>
@@ -117,10 +117,9 @@ return countStars(sky);
 
     return (
         <main className="flex grow">
-            <div className="flex grow">
-                <section className="h-full w-1/2">
+            <div className="flex max-sm:flex-col grow">
+                <section className="sm:h-full h-1/2 sm:w-1/2 w-full max-sm:border-b border-gray-700 overflow-hidden flex flex-col">
                     <Editor
-                        height="100%"
                         defaultLanguage="javascript"
                         value={code}
                         onChange={handleEditorChange}
@@ -129,11 +128,13 @@ return countStars(sky);
                             selectOnLineNumbers: true,
                             minimap: { enabled: false },
                             wordWrap: "on",
+                            scrollBeyondLastLine: false,
                         }}
+                        className="flex-grow"
                     />
                 </section>
 
-                <section className="h-full w-1/2">                 
+                <section className="sm:h-full h-1/2 sm:w-1/2 w-full">                 
                     <div className="px-4 bg-gray-800/50 w-full min-h-full text-gray-300">
                         <pre>{output}</pre>
 
@@ -151,7 +152,7 @@ return countStars(sky);
                     </div>
 
                     {solved ? (
-                        <div className="absolute bottom-0 right-0 flex gap-2 items-end mr-5 mb-2">
+                        <div className="absolute bottom-0 right-0 flex gap-2 items-end mr-5 mb-2 max-sm:flex-col">
                             <button onClick={() => router.push("/")} className="py-2 px-6 bg-white rounded-full text-black hover:bg-gray-100">Go Home</button>
                             <button onClick={handleRestart} className="py-2 px-6 bg-white rounded-full text-black hover:bg-gray-100">Restart</button>
                         </div>
