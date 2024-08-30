@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   return (
@@ -26,26 +25,23 @@ function Wallpaper() {
 
 function Header() {
   return (
-    <header className="flex">
+    <header className="flex justify-center items-center text-center py-4">
       <h1 className="text-3xl font-bold">SpaceCode - Redefining the Future of Code in the Space Industry</h1>
     </header>
   );
 }
 
 function Main() {
-  const [problem, setProblem] = useState<string>("");
+  const router = useRouter();
 
-  const handleProblem = () => {
-    setProblem("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien. Nulla facilisi. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero.");
+  const handleProblemClick = () => {
+    router.push("/problem");
   }
 
   return (
-    <main className="flex-grow flex flex-col items-center max-w-3xl mx-auto my-12">
-      <h2>Solve the problem of the day</h2>
-      
-      <div className="flex flex-col items-center gap-4">
-        <Button className="w-min" onClick={handleProblem}><h3>Problem</h3></Button>
-        <p className="text-center">{problem}</p>
+    <main className="flex flex-col items-center justify-center max-w-3xl mx-auto h-[50vh]">
+      <div className="flex flex-col items-center">
+        <button className="text-2xl hover:text-gray-400 hover:scale-105 transition-all duration-300" onClick={handleProblemClick}>Solve problem of the day</button>
       </div>
     </main>
   );
@@ -53,7 +49,7 @@ function Main() {
 
 function Footer() {
   return (
-    <footer className="flex justify-center items-center text-center">
+    <footer className="flex grow justify-center items-end text-center py-1">
       <p className="text-sm">
         @2024 SpaceCode. All rights reserved.
       </p>
