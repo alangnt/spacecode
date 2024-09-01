@@ -35,7 +35,7 @@ function Main() {
   const router = useRouter();
 
   const handleProblemClick = () => {
-    router.push("/problems/3108");
+    router.push("/problems/0109");
   }
 
   return (
@@ -55,4 +55,4 @@ function Footer() {
       </p>
     </footer>
   );
-} 
+}
