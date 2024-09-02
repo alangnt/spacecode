@@ -17,6 +17,7 @@
     "lucide-react": "^0.436.0",
     "monaco-editor": "^0.51.0",
     "next": "14.2.7",
+    "next-auth": "^4.24.7",
     "pg": "^8.12.0",
     "react": "^18",
     "react-dom": "^18",

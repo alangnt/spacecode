@@ -35,7 +35,7 @@ function Main() {
   const router = useRouter();
 
   const handleProblemClick = () => {
-    router.push("/problems/0109");
+    router.push("/problems/0209");
   }
 
   return (
