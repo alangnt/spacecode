@@ -31,4 +31,5 @@ export const { GET, POST } = NextAuth({
     pages: {
         signIn: "/login",
     },
+    secret: process.env.NEXTAUTH_SECRET as string,
 });

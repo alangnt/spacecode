@@ -29,7 +29,7 @@ function Header({ solved }: { solved: boolean }) {
         <header className="flex items-center justify-between p-2 bg-gray-800 border-b border-gray-700 text-center">
             <ChevronLeft className="p-2 w-8 h-8 rounded-full hover:bg-gray-700 cursor-pointer" onClick={handleBack} />
             <div className="flex items-center gap-2 sm:absolute sm:left-1/2 sm:-translate-x-1/2">
-                <h1 className="text-lg max-sm:text-sm">Problem (09/01): Alien Message Decoder</h1>
+                <h1 className="text-lg max-sm:text-sm">Problem (09/02): Alien Message Decoder</h1>
                 {solved && <Check className="w-4 h-4 text-green-500" />}
             </div>
         </header>
